@@ -24,7 +24,7 @@ public class FailureServiceImpl implements FailureService {
         String machineName = machine.getName();
 
         Failure failure = new Failure();
-        failure.setMachine(machine);
+        failure.setMachineName(machine);
         failure.setTitle(title);
         failure.setDescription(description);
         failure.setStatus(false);
@@ -38,6 +38,7 @@ public class FailureServiceImpl implements FailureService {
 
     @Override
     public List<Failure> listFailure() {
+        LOG.info("In listFailure serviceIMPL");
         return failureRepository.findAll();
     }
 
@@ -46,10 +47,10 @@ public class FailureServiceImpl implements FailureService {
         return failureRepository.findFailureById(id);
     }
 
-    @Override
-    public List<Failure> getFailureByMachineName(String name) {
-        return failureRepository.findFailureByMachineName(name);
-    }
+//    @Override
+//    public List<Failure> getFailureByMachineName(String name) {
+//        return failureRepository.findFailureByMachineName(name);
+//    }
 
     @Override
     public Failure deleteFailure(Failure failure) {

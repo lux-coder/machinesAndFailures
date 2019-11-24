@@ -16,6 +16,8 @@ import javax.sql.DataSource;
 @ComponentScan
 public class ApplicationEnvironment {
 
+    public static final String CLIENT_DOMAIN_URL = "*";
+
     @Autowired
     DataSource dataSource;
 

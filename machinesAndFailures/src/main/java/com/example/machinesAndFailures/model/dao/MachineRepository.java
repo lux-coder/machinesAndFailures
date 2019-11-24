@@ -11,7 +11,8 @@ import java.util.List;
 
 public interface MachineRepository extends JpaRepository<Machine, Long> {
 
-    public List<Machine> findAll();
+//    @Query("SELECT f FROM Failure f WHERE f.machine.id=:x")
+//    public Machine findAllFailures(@Param("x") Long id);
 
     @Query("SELECT m FROM Machine m WHERE m.id=:x")
     public Machine findMachineById(@Param("x") Long id);

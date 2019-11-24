@@ -13,7 +13,7 @@ public interface FailureService {
 
     public Failure getFailureById(Long id);
 
-    public List<Failure> getFailureByMachineName(String name);
+//    public List<Failure> getFailureByMachineName(String name);
 
     public Failure deleteFailure(Failure failure);
 }

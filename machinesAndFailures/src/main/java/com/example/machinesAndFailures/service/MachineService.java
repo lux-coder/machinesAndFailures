@@ -10,6 +10,8 @@ public interface MachineService {
 
     public List<Machine> listMachine();
 
+//    public Machine listAllFailures(Long id);
+
     public Machine getMachineById(Long id);
 
     public Machine getMachineByName(String name);

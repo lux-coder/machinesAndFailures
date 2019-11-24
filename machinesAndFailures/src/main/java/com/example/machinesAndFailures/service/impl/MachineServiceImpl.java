@@ -33,6 +33,11 @@ public class MachineServiceImpl implements MachineService {
         return machineRepository.findAll();
     }
 
+//    @Override
+//    public Machine listAllFailures(Long id) {
+//        return machineRepository.findAllFailures(id);
+//    }
+
     @Override
     public Machine getMachineById(Long id) {
         return machineRepository.findMachineById(id);

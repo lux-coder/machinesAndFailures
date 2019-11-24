@@ -29,8 +29,15 @@ public class MachineController {
 
     @GetMapping("/list")
     public List<Machine> getMachineList(){
+        LOG.info("In /machine/list");
         return machineService.listMachine();
     }
+
+//    @GetMapping("/listFailures/{id}")
+//    public Machine getAllFailures(@PathVariable("id") Long id){
+//        LOG.info("In Machine /listFailures/{id}");
+//        return machineService.listAllFailures(id);
+//    }
 
     @GetMapping("/getMachineById/{machineId}")
     public Machine getMachineById(@PathVariable("machineId") Long id){
@@ -39,6 +46,9 @@ public class MachineController {
 
     @PostMapping("/save")
     public ResponseEntity<?> saveMachine(@RequestBody HashMap<String, String> request){
+
+        LOG.info("In Machine /save");
+
         String name = request.get("name");
         String type = request.get("type");
         String manufacturer = request.get("manufacturer");
@@ -70,33 +80,29 @@ public class MachineController {
         }
     }
 
+//
+//    @GetMapping("/getMachineFailures/{name}")
+//    public ResponseEntity<?> getMachineFailures(@PathVariable("name") String name){
+//        Machine machine = machineService.getMachineByName(name);
+//
+//        if(machine == null){
+//            return new ResponseEntity<>("Machine not found", HttpStatus.NOT_FOUND);
+//        }
+//
+//        try {
+//            List<Failure> failures = failureService.getFailureByMachineName(name);
+//            return new ResponseEntity<>(failures, HttpStatus.OK);
+//
+//        } catch (Exception e){
+//            LOG.error("Exception {} occurred while trying to fetch machine failures with stacktrace {} ", e.getMessage(), e.getStackTrace());
+//            return new ResponseEntity<>("Exception occurred while trying to fetch machine failures", HttpStatus.BAD_REQUEST);
+//
+//        }
+//}
 
-    @GetMapping("/getMachineFailures/{name}")
-    public ResponseEntity<?> getMachineFailures(@PathVariable("name") String name){
-        Machine machine = machineService.getMachineByName(name);
-
-        if(machine == null){
-            return new ResponseEntity<>("Machine not found", HttpStatus.NOT_FOUND);
-        }
-
-        try {
-            List<Failure> failures = failureService.getFailureByMachineName(name);
-            return new ResponseEntity<>(failures, HttpStatus.OK);
-
-        } catch (Exception e){
-            LOG.error("Exception {} occurred while trying to fetch machine failures with stacktrace {} ", e.getMessage(), e.getStackTrace());
-            return new ResponseEntity<>("Exception occurred while trying to fetch machine failures", HttpStatus.BAD_REQUEST);
-
-        }
-
-
-
-
-
-
-    }
 
 
 
 
 }
+

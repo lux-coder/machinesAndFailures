@@ -5,18 +5,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-//@ToString
+@ToString
 @Entity(name = "Machine")
 @Table(name = "machine")
-public class Machine {
+public class Machine implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -24,7 +25,7 @@ public class Machine {
     private String manufacturer;
 
     @OneToMany(
-            mappedBy = "machine",
+            mappedBy = "machineName",
             orphanRemoval = true,
             cascade = CascadeType.ALL)
     private List<Failure> failures = new ArrayList<>();
@@ -49,13 +50,13 @@ public class Machine {
     //added for mitigating propagation issues
     public void addFailure(Failure failure){
         failures.add(failure);
-        failure.setMachine(this);
+        failure.setMachineName(this);
     }
 
     //added for mitigating propagation issues
     public void removeFailure(Failure failure){
         failures.remove(failure);
-        failure.setMachine(null);
+        failure.setMachineName(null);
     }
 
 }
