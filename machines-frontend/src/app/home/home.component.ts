@@ -3,7 +3,6 @@ import { Subscription, Observable } from 'rxjs';
 import { Failure } from '../model/failure';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { FailureService } from '../service/failure.service';
-import { DataSource } from '@angular/cdk/table';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
    getFailures(): any {
-    this.subscriptions.push(this.failureService.getFailures().subscribe(
+    this.subscriptions.push(this.failureService.getFailuresUnresolved().subscribe(
       (response: Failure[]) => {
         this.failures = response;
         this.dataSource = new MatTableDataSource(this.failures);
@@ -60,17 +59,3 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
 }
-
-/* export class FailureDataSource extends DataSource<any>{
-
-  constructor (private failureService: FailureService){
-    super();
-  }
-
-  connect(): Observable<Failure[]>{
-    return this.failureService.getFailures();
-  }
-
-  disconnect(){}
-
-} */

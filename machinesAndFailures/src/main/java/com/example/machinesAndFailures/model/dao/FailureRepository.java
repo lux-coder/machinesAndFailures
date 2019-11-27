@@ -24,6 +24,9 @@ public interface FailureRepository extends JpaRepository<Failure, Long> {
     @Query(value = "SELECT * FROM failure WHERE machine_name=:name ", nativeQuery = true)
     public List<Failure> findFailureByMachineName(@Param("name") String name);
 
+    @Query(value = "SELECT * FROM Failure WHERE status=false ORDER BY priority, timestamp ASC", nativeQuery = true)
+    public List<Failure> findFailureUnresolved();
+
     @Modifying
     @Query("DELETE Failure WHERE id=:x")
     public void deleteFailureById(@Param("x") Long id);

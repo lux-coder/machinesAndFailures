@@ -47,6 +47,12 @@ public class FailureController {
         return failureService.listThemAll();
     }
 
+    @GetMapping()
+    public List<Failure> getFailuresUnresolved(){
+        LOG.info("In /getFailuresUnresolved");
+        return failureService.listFailureUnresolved();
+    }
+
     @PostMapping("/save")
     public ResponseEntity<?> saveFailure(@RequestBody HashMap<String, String> request){
         LOG.info("In /failure/save");

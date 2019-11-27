@@ -16,6 +16,8 @@ public interface FailureService {
 
     public List<Failure> listThemAll();
 
+    public List<Failure> listFailureUnresolved();
+
     public Failure getFailureById(Long id);
 
 //    public List<Failure> getFailureByMachineName(String name);

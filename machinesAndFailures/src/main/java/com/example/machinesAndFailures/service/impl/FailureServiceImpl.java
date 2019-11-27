@@ -56,6 +56,12 @@ public class FailureServiceImpl implements FailureService {
     }
 
     @Override
+    public List<Failure> listFailureUnresolved() {
+        LOG.info("In listFailureUnresolved");
+        return failureRepository.findFailureUnresolved();
+    }
+
+    @Override
     public Failure getFailureById(Long id) {
         return failureRepository.findFailureById(id);
     }

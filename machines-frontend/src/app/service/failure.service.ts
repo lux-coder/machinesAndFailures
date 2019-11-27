@@ -18,6 +18,10 @@ export class FailureService {
     return this.http.get<Failure[]>(`${this.host}/failure/list`);
   }
 
+  getFailuresUnresolved(): Observable<Failure[]>{
+    return this.http.get<Failure[]>(`${this.host}/failure`);
+  }
+
 
 
 
