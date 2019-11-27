@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   failures: Failure[] = [];
   host: string;
 
-  displayedColumns: string[] = ['position', 'title', 'description', 'machineName', 'priority', 'timestamp'];
+  displayedColumns: string[] = ['position', 'title', 'description', 'machineName', 'priority', 'timestamp', 'status'];
   dataSource = new MatTableDataSource<Failure>([]);
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -50,6 +50,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onRowClicked(row){
     console.log("Row clicked: ", row);
+  }
+
+  onStatusChange(failure: Failure): void{
+    console.log("ID of failure is: ", failure);
+    this.subscriptions.push(
+      this.failureService.setFailureResolved(failure).subscribe(
+        response => {
+          console.log(response);
+        },
+        error => {
+          console.log(error);}
+      )
+    );          
   }
 
    

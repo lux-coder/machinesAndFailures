@@ -20,6 +20,8 @@ public interface FailureService {
 
     public Failure getFailureById(Long id);
 
+    public void updateFailureStatus(Long id);
+
 //    public List<Failure> getFailureByMachineName(String name);
 
     public Failure deleteFailure(Failure failure);

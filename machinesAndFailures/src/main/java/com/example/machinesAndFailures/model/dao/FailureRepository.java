@@ -5,9 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public interface FailureRepository extends JpaRepository<Failure, Long> {
 
     List<Failure> findByTitle(String title);
@@ -26,6 +28,10 @@ public interface FailureRepository extends JpaRepository<Failure, Long> {
 
     @Query(value = "SELECT * FROM Failure WHERE status=false ORDER BY priority, timestamp ASC", nativeQuery = true)
     public List<Failure> findFailureUnresolved();
+
+    @Modifying
+    @Query(value = "UPDATE failure SET status=true WHERE id=:x", nativeQuery = true)
+    public void updateFailureStatus(@Param("x") Long x);
 
     @Modifying
     @Query("DELETE Failure WHERE id=:x")

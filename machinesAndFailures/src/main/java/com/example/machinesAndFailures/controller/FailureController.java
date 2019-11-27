@@ -8,10 +8,13 @@ import com.example.machinesAndFailures.service.MachineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,25 @@ public class FailureController {
     public List<Failure> getFailuresUnresolved(){
         LOG.info("In /getFailuresUnresolved");
         return failureService.listFailureUnresolved();
+    }
+
+    @CrossOrigin(origins = "*", methods = RequestMethod.PUT, allowedHeaders = "*")
+    @PutMapping("/updateStatus")
+    public ResponseEntity<?> updateFailureStatus(@RequestBody Long id){
+        LOG.info("In /updateFailureStatus");
+
+        if(failureService.getFailureById(id) != null ){
+            try {
+                LOG.info("Status set to true");
+                failureService.updateFailureStatus(id);
+                return new ResponseEntity<>("Status updated", HttpStatus.OK);
+
+            } catch (Exception e){
+                LOG.error("Exception {} occurred while trying to update status with stacktrace {}", e.getMessage(), e);
+                return new ResponseEntity<>("Error setting status", HttpStatus.BAD_REQUEST);
+            }
+        } else
+            return new ResponseEntity<>("No failure with that ID", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/save")

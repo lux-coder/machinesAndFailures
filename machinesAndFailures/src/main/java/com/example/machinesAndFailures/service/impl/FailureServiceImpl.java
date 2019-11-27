@@ -66,6 +66,13 @@ public class FailureServiceImpl implements FailureService {
         return failureRepository.findFailureById(id);
     }
 
+    @Override
+    public void updateFailureStatus(Long id) {
+        LOG.info("In updateFailureStatus");
+        LOG.info(String.valueOf(id));
+        failureRepository.updateFailureStatus(id);
+    }
+
 //    @Override
 //    public List<Failure> getFailureByMachineName(String name) {
 //        return failureRepository.findFailureByMachineName(name);
