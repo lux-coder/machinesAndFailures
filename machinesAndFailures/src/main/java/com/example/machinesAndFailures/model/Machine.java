@@ -1,5 +1,6 @@
 package com.example.machinesAndFailures.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,11 +8,12 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity(name = "Machine")
 @Table(name = "machine")
 public class Machine implements Serializable {
@@ -59,4 +61,14 @@ public class Machine implements Serializable {
         failure.setMachineName(null);
     }
 
+    @Override
+    public String toString() {
+        return "Machine{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", failures=" + Arrays.toString(failures.toArray()) +
+                '}';
+    }
 }

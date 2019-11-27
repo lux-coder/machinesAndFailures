@@ -2,6 +2,7 @@ package com.example.machinesAndFailures.service.impl;
 
 import com.example.machinesAndFailures.model.Failure;
 import com.example.machinesAndFailures.model.Machine;
+import com.example.machinesAndFailures.model.Priority;
 import com.example.machinesAndFailures.model.dao.FailureRepository;
 import com.example.machinesAndFailures.service.FailureService;
 import org.slf4j.Logger;
@@ -20,7 +21,8 @@ public class FailureServiceImpl implements FailureService {
     private FailureRepository failureRepository;
 
     @Override
-    public Failure saveFailure(Machine machine, String title, String description) {
+    public Failure saveFailure(Machine machine, String title, String description, Priority priority) {
+        LOG.info("In saveFailure");
         String machineName = machine.getName();
 
         Failure failure = new Failure();
@@ -29,8 +31,7 @@ public class FailureServiceImpl implements FailureService {
         failure.setDescription(description);
         failure.setStatus(false);
         failure.setTimestamp(new Timestamp(System.currentTimeMillis()));
-
-        machine.setFailures(Collections.singletonList(failure));
+        failure.setPriority(priority);
 
         failureRepository.save(failure);
         return failure;
@@ -40,6 +41,18 @@ public class FailureServiceImpl implements FailureService {
     public List<Failure> listFailure() {
         LOG.info("In listFailure serviceIMPL");
         return failureRepository.findAll();
+    }
+
+    @Override
+    public List<Failure> listFailureWithMachine(String machineName){
+        LOG.info("In listFailureWithMachine");
+        return failureRepository.findFailureByMachineName(machineName);
+    }
+
+    @Override
+    public List<Failure> listThemAll(){
+        LOG.info("In listThemAll");
+        return failureRepository.getThemAll();
     }
 
     @Override

@@ -1,1 +1,49 @@
 <p>home works!</p>
+<div class="wrapper">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let failures"> {{failures.id}} </td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let failures"> {{failures.title}} </td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let failures"> {{failures.description}} </td>
+        </ng-container>
+
+        <!-- MachineName Column -->
+        <ng-container matColumnDef="machineName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Machine Name </th>
+            <td mat-cell *matCellDef="let failures"> {{failures.machineName}} </td>
+        </ng-container>
+
+        <!-- Priority Column -->
+        <ng-container matColumnDef="priority">
+            <th mat-header-cell *matHeaderCellDef> Priority </th>
+            <td mat-cell *matCellDef="let failures"> {{failures.priority}} </td>
+        </ng-container>
+
+        <!-- Timestamp Column -->
+        <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Failure added @ </th>
+            <td mat-cell *matCellDef="let failures"> {{failures.timestamp}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+    </table>
+ <!-- Angular 8 pagination -->
+ <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+</div>
