@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RequstWrapper {
+public class RequestWrapper {
 
     private Machine machine;
     private List<Failure> failures;

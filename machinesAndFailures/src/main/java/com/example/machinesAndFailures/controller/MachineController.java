@@ -2,7 +2,7 @@ package com.example.machinesAndFailures.controller;
 
 import com.example.machinesAndFailures.model.Failure;
 import com.example.machinesAndFailures.model.Machine;
-import com.example.machinesAndFailures.model.RequstWrapper;
+import com.example.machinesAndFailures.model.RequestWrapper;
 import com.example.machinesAndFailures.service.FailureService;
 import com.example.machinesAndFailures.service.MachineService;
 import org.slf4j.Logger;
@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -46,16 +45,20 @@ public class MachineController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveMachine(@RequestBody RequstWrapper requstWrapper) {
+    public ResponseEntity<?> saveMachine(@RequestBody RequestWrapper requestWrapper) {
         LOG.info("In Machine /save");
 
-        LOG.info(String.valueOf(requstWrapper));
+        LOG.info(String.valueOf(requestWrapper));
 
-        Machine machine = requstWrapper.getMachine();
+        Machine machine = requestWrapper.getMachine();
         LOG.info(String.valueOf(machine));
-        List<Failure> failures = requstWrapper.getFailures();
+        List<Failure> failures = requestWrapper.getFailures();
         LOG.info(String.valueOf(failures));
-        
+
+        for(Failure failure: failures){
+            LOG.info("Title: {} and Description: {}",failure.getTitle(), failure.getDescription());
+        }
+
 
         String name = machine.getName();
         String type = machine.getType();
@@ -77,7 +80,7 @@ public class MachineController {
             return new ResponseEntity<>("Error occurred while trying to save machine", HttpStatus.BAD_REQUEST);
         }
 
-      //  return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
+//        return new ResponseEntity<>("Saved", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")

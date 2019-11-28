@@ -61,9 +61,9 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   get failures(): FormGroup {
     return this.formBuilder.group({
-      failure_title: "",
-      failure_description: "",
-      failure_priority: "",
+      title: "",
+      description: "",
+      priority: "",
       files: this.formBuilder.array([this.files])
     });
   }

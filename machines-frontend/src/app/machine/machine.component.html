@@ -63,18 +63,19 @@
                     <label>Machine Name <input formControlName="name" /></label>
                     <label>Machine Type <input formControlName="type" /></label>
                     <label>Machine Manufacturer <input formControlName="manufacturer" /></label>
+                    <button type="button" (click)="addFailure()">Add Failure</button>
                 </div>
 
                 <hr />
-                <button type="button" (click)="addFailure()">Add Failure</button>
+                
                 <div formArrayName="failures">
                     <div class="failures" *ngFor="
                                   let failure of machineForm.get('failures').controls;
                                   let failureIndex = index
                                 " [formGroupName]="failureIndex">
-                        <label>Failure Title <input formControlName="failure_title" />
-                            <label>Failure Description <input formControlName="failure_description" /></label>
-                            <label>Failure Priority <input formControlName="failure_priority" /></label>
+                        <label>Failure Title <input formControlName="title" />
+                            <label>Failure Description <input formControlName="description" /></label>
+                            <label>Failure Priority <input formControlName="priority" /></label>
                             <button (click)="deleteFailure(failureIndex)">x</button></label>
                         <hr />
                         <button type="button" (click)="addFile(failure)">Add File</button>
