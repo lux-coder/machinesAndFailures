@@ -64,6 +64,7 @@ export class MachineComponent implements OnInit, OnDestroy {
       title: "",
       description: "",
       priority: "",
+      status: "",
       files: this.formBuilder.array([this.files])
     });
   }
@@ -95,7 +96,6 @@ export class MachineComponent implements OnInit, OnDestroy {
       (response: Machine[]) => {
         this.machines = response;
         this.dataSource = new MatTableDataSource(this.machines);
-
         console.log(this.machines);
       },
       error => {

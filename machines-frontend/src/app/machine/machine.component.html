@@ -75,7 +75,27 @@
                                 " [formGroupName]="failureIndex">
                         <label>Failure Title <input formControlName="title" />
                             <label>Failure Description <input formControlName="description" /></label>
-                            <label>Failure Priority <input formControlName="priority" /></label>
+                            
+
+                            <mat-form-field>
+                                    <mat-label>Failure Priority</mat-label>
+                                    <select matNativeControl required formControlName="priority">
+                                      <option value="HIGH">HIGH</option>
+                                      <option value="MEDIUM">MEDIUM</option>
+                                      <option value="LOW">LOW</option>
+                                    </select>
+                                  </mat-form-field>
+
+                                  <mat-form-field>
+                                        <mat-label>Failure Status</mat-label>
+                                        <select matNativeControl required formControlName="status">
+                                          <option value="true">Resolved</option>
+                                          <option value="false">Unresolved</option>
+                                        </select>
+                                      </mat-form-field>
+
+
+
                             <button (click)="deleteFailure(failureIndex)">x</button></label>
                         <hr />
                         <button type="button" (click)="addFile(failure)">Add File</button>
