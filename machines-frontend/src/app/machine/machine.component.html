@@ -59,7 +59,7 @@
         <div class="modal-content">
 
             <form class="ui form" [formGroup]="machineForm" >
-                <div class="form-header" formGroupName="machine_details">
+                <div class="form-header" formGroupName="machine">
                     <label>Machine Name <input formControlName="name" /></label>
                     <label>Machine Type <input formControlName="type" /></label>
                     <label>Machine Manufacturer <input formControlName="manufacturer" /></label>
@@ -91,6 +91,7 @@
                 </div>
 
                 <button (click)="saveMachine()">Save</button>
+                <button (click)="saveThis(machineForm)">saveThis</button>
             </form>
 
         </div>

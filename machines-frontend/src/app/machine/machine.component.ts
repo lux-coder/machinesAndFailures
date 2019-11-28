@@ -20,6 +20,7 @@ export class MachineComponent implements OnInit, OnDestroy {
   machineId: number;
   machines: Machine[] = [];
   machine: Machine;
+  makina: Machine;
   machineForm: FormGroup;
   host: string;
 
@@ -40,7 +41,7 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.machineForm = this.formBuilder.group({
-      machine_details: this.formBuilder.group({
+      machine: this.formBuilder.group({
         name: [''],
         type: [''],
         manufacturer: ['']
@@ -103,11 +104,20 @@ export class MachineComponent implements OnInit, OnDestroy {
     ));
   }
 
+
+  saveThis(){
+    console.log(this.machineForm.value.name);
+  }
+
+
+
   saveMachine(machine?: Machine): void {
     console.log(machine);
     console.log(this.machineForm.value);    
-    machine = this.machineForm.value;
-    this.subscriptions.push(this.machineService.addMachine(machine).subscribe(
+
+    this.machine = this.machineForm.value;
+
+    this.subscriptions.push(this.machineService.addMachine(this.machine).subscribe(
       response => {
         console.log(response);
         console.log("Machine saved to database!");

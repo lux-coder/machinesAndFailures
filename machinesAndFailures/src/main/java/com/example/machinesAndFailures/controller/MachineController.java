@@ -2,6 +2,7 @@ package com.example.machinesAndFailures.controller;
 
 import com.example.machinesAndFailures.model.Failure;
 import com.example.machinesAndFailures.model.Machine;
+import com.example.machinesAndFailures.model.RequstWrapper;
 import com.example.machinesAndFailures.service.FailureService;
 import com.example.machinesAndFailures.service.MachineService;
 import org.slf4j.Logger;
@@ -45,13 +46,21 @@ public class MachineController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveMachine(@RequestBody Machine machine){
+    public ResponseEntity<?> saveMachine(@RequestBody RequstWrapper requstWrapper) {
         LOG.info("In Machine /save");
+
+        LOG.info(String.valueOf(requstWrapper));
+
+        Machine machine = requstWrapper.getMachine();
+        LOG.info(String.valueOf(machine));
+        List<Failure> failures = requstWrapper.getFailures();
+        LOG.info(String.valueOf(failures));
+        
 
         String name = machine.getName();
         String type = machine.getType();
         String manufacturer = machine.getManufacturer();
-        List<Failure> failures = machine.getFailures();
+        //failures = machine.getFailures();
 
         LOG.info("Name: {}", name);
         LOG.info("Type: {}", type);
@@ -68,7 +77,7 @@ public class MachineController {
             return new ResponseEntity<>("Error occurred while trying to save machine", HttpStatus.BAD_REQUEST);
         }
 
-        //return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
+      //  return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")

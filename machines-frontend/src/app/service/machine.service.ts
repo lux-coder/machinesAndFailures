@@ -18,6 +18,10 @@ export class MachineService {
   addMachine(machine: Machine): Observable<Machine | HttpErrorResponse>{
     console.log("from sevice");
     console.log(machine);
+
+    let makina = JSON.stringify(machine);
+    console.log(makina);
+
     return this.http.post<Machine>(`${this.host}/machine/save`, machine);
   }
 
