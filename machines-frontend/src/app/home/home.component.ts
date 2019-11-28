@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   failures: Failure[] = [];
+  fail: boolean;
   host: string;
 
   displayedColumns: string[] = ['position', 'title', 'description', 'machineName', 'priority', 'timestamp', 'status'];
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onStatusChange(failure: Failure): void{
-    console.log("ID of failure is: ", failure);
+    console.log("ID of failure is: ", failure);    
     this.subscriptions.push(
       this.failureService.setFailureResolved(failure).subscribe(
         response => {

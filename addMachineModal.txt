@@ -1,0 +1,58 @@
+ <form [formGroup]="machineForm" (ngSubmit)="saveMachine()">
+                <mat-card>
+
+                    <mat-card-header>
+                        <mat-card-title>
+                            <mat-form-field>
+                                <input matInput placeholder="Machine Name" formControlName="name">
+                            </mat-form-field>
+                        </mat-card-title>
+
+                        <mat-card-subtitle>
+                            <mat-form-field>
+                                <input matInput placeholder="Machine Type" formControlName="type">
+                            </mat-form-field>
+                        </mat-card-subtitle>
+
+                        <mat-card-subtitle>
+                            <mat-form-field>
+                                <input matInput placeholder="Machine Manufacturer" formControlName="manufacturer">
+                            </mat-form-field>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content>
+                        <div formArrayName="failures">
+
+                            <div *ngFor="let failure of failureForms.controls['failures']; let i=index">
+
+                                <div class="container" formGroupName="{{i}}">
+
+                                <input matInput placeholder="Failure Title" formControlName="title" #failures.title>
+                                <input matInput placeholder="Failure Description" formControlName="description" #failure.description>
+
+                                <button (click)="deleteFailure(i)">Delete</button>
+
+                            </div>
+
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+
+
+                    <mat-card-actions id="actionsAdd">
+                        <input type="submit" value="submit"
+                            (click)="saveMachine(machineForm.value)">
+                            <button mat-button class="add" (click)="addFailure()">Add Failure</button>
+                            <button mat-button id="close" (click)="onCancel()">Close</button>
+                        <!-- <button mat-button class="save" (click)="saveMachine(name.value, type.value, manufacturer.value)">Save Machine</button>
+                      
+                     -->
+                    </mat-card-actions>
+
+
+
+                </mat-card>
+
+            </form>

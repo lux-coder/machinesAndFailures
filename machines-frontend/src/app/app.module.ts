@@ -9,11 +9,13 @@ import { MachineDetailsComponent } from './machine-details/machine-details.compo
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'; 
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { 
   MatToolbarModule, 
   MatButtonModule,
   MatSidenavModule,
+  MatSlideToggleModule,
   MatIconModule,
   MatListModule ,
   MatStepperModule,
@@ -39,14 +41,20 @@ import {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
     MatButtonModule,
+    MatIconModule,
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
     MatCardModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

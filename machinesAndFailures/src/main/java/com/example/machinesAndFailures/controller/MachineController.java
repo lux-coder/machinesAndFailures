@@ -45,22 +45,30 @@ public class MachineController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> saveMachine(@RequestBody HashMap<String, String> request){
-
+    public ResponseEntity<?> saveMachine(@RequestBody Machine machine){
         LOG.info("In Machine /save");
 
-        String name = request.get("name");
-        String type = request.get("type");
-        String manufacturer = request.get("manufacturer");
+        String name = machine.getName();
+        String type = machine.getType();
+        String manufacturer = machine.getManufacturer();
+        List<Failure> failures = machine.getFailures();
+
+        LOG.info("Name: {}", name);
+        LOG.info("Type: {}", type);
+        LOG.info("Manufacturer: {}", manufacturer);
+        LOG.info("Failures: {}", failures);
+        LOG.info("Machine object: {}", machine);
 
         try {
-            Machine machine = machineService.saveMachine(name, type, manufacturer);
-            return new ResponseEntity<>(machine, HttpStatus.CREATED);
+            machineService.saveMachine(name, type, manufacturer, failures);
+            return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
 
         } catch (Exception e){
             LOG.error("Exception {} occurred while trying to save machine with stacktrace {} ", e.getMessage(), e.getStackTrace());
             return new ResponseEntity<>("Error occurred while trying to save machine", HttpStatus.BAD_REQUEST);
         }
+
+        //return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")

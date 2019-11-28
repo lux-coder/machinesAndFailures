@@ -1,8 +1,4 @@
-<p>machine works!</p>
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Position Column -->
     <ng-container matColumnDef="position">
@@ -37,3 +33,98 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+
+<mat-toolbar>
+    <mat-toolbar-row>
+        <div class="container">
+
+            <a class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#addMachine">
+                Add Machine
+            </a>
+        </div>
+
+
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+
+
+<!-- Add modal -->
+<div class="modal fade" id="addMachine" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+
+            <form class="ui form" [formGroup]="machineForm" (ngSubmit)="saveMachine()">
+                <div class="field ten wide">
+                    <!-- Trip Basic detail -->
+                    <label for="name">Machine Name</label>
+                    <input class="ta-main-input" type="text" id="machineName" placeholder="Machine name"
+                        formControlName="name">
+                </div>
+
+                <div class="field ten wide">
+                    <!-- Trip Basic detail -->
+                    <label for="name">Machine Type</label>
+                    <input class="ta-main-input" type="text" id="machineType" placeholder="Machine type"
+                        formControlName="type">
+                </div>
+
+                <div class="field ten wide">
+                    <!-- Trip Basic detail -->
+                    <label for="name">Machine Manufacturer</label>
+                    <input class="ta-main-input" type="text" id="machineManufacturer" placeholder="Machine manufacturer"
+                        formControlName="manufacturer">
+                </div>
+
+                <div class="trip-edit-main-container">
+                    <!--TODO: Remove inline CSS later -->
+                    <h4 class="side"> Failure </h4>
+                    <button type="button" class="circular ui icon button" (click)="addFailure()">
+                        <i class="icon plus"></i>
+                    </button>
+                    <ul class="list-group" formArrayName="failures">
+                        <div *ngFor="let failure of machineForm.controls['failures'].controls; let i = index">
+                            <div class="city-box" formGroupName="{{i}}">
+                                <div class="fields">
+                                    <div class="field eight wide">
+                                        <label for="description">Failure name</label>
+                                        <input type="text" placeholder="Caliornia, SF" formControlName="name">
+                                    </div>
+                                </div>
+                                <!-- Places basic info -->
+                                <!--TODO: Add provision for places later-->
+
+                            </div>
+                            <div class="vertical-line"></div>
+                        </div>
+                        <div class="add-city-wrapper">
+                            <div class="ui primary animated button add-city-button" tabindex="0" (click)="addFailure()">
+                                <div class="visible content">Add Failure</div>
+                                <div class="hidden content">
+                                    <i class="plus icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="ui secondary basic button" (click)="onCancel()">Cancel</button>
+                        <button type="submit" class="ui primary basic button"
+                            (click)="saveMachine(machineForm.value)">Save</button>
+                    </div>
+                </div>
+            </form>
+
+
+
+
+
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 package com.example.machinesAndFailures.service.impl;
 
+import com.example.machinesAndFailures.model.Failure;
 import com.example.machinesAndFailures.model.Machine;
 import com.example.machinesAndFailures.model.dao.MachineRepository;
 import com.example.machinesAndFailures.service.MachineService;
@@ -18,11 +19,12 @@ public class MachineServiceImpl implements MachineService {
 
 
     @Override
-    public Machine saveMachine(String name, String type, String manufacturer) {
+    public Machine saveMachine(String name, String type, String manufacturer, List<Failure> failures) {
         Machine machine = new Machine();
         machine.setName(name);
         machine.setType(type);
         machine.setManufacturer(manufacturer);
+        machine.setFailures(failures);
 
         machineRepository.save(machine);
         return machine;

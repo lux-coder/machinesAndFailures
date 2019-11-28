@@ -23,7 +23,7 @@ export class FailureService {
   }
 
   setFailureResolved(failure: Failure): Observable<Failure>{
-    console.log(failure);
+    console.log(failure);     
     return this.http.put<Failure>(`${this.host}/failure/updateStatus`, failure);
     
   }

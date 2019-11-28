@@ -1,0 +1,35 @@
+.navbar-nav {
+    flex-direction: row;}
+  
+    .bt{
+        width: 100%;
+    }
+    .active {
+     border-bottom: 3px solid white;
+    }
+
+mat-form-field {
+        display: block;
+    }
+    
+textarea {
+        min-height: 130px;
+    }
+
+
+    #actionsAdd{
+        display: flex;    
+      }
+      
+      .save{
+        background-color: green;
+      }
+      
+      .add{
+        background-color: yellow;
+      }
+      
+      #close{
+        margin-left: auto;
+        background-color: red;
+      }
