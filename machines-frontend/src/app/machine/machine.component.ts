@@ -4,7 +4,7 @@ import { Machine } from '../model/machine';
 import { MachineService } from '../service/machine.service';
 import { MatSort, MatPaginator } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FailureService } from '../service/failure.service';
 import { Failure } from '../model/failure';
@@ -30,7 +30,6 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-
   constructor(
     private router: Router,
     private machineService: MachineService,
@@ -41,10 +40,12 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.machineForm = this.formBuilder.group({
-      name: [''],
-      type: [''],
-      manufacturer: [''],
-      failures: this.formBuilder.array([])
+      machine_details: this.formBuilder.group({
+        name: [''],
+        type: [''],
+        manufacturer: ['']
+      }),
+      failures: this.formBuilder.array([this.failures])
     });
   }
 
@@ -55,6 +56,37 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log("submiting");
+  }
+
+  get failures(): FormGroup {
+    return this.formBuilder.group({
+      failure_title: "",
+      failure_description: "",
+      failure_priority: "",
+      files: this.formBuilder.array([this.files])
+    });
+  }
+
+  get files(): FormGroup {
+    return this.formBuilder.group({
+      file_name: ""
+    });
+  }
+
+  addFailure() {
+    (this.machineForm.get("failures") as FormArray).push(this.failures);
+  }
+
+  deleteFailure(index) {
+    (this.machineForm.get("failures") as FormArray).removeAt(index);
+  }
+
+  addFile(failure) {
+    failure.get("files").push(this.files);
+  }
+
+  deleteFile(failure, index) {
+    failure.get("files").removeAt(index);
   }
 
   getMachines(): any {
@@ -72,16 +104,9 @@ export class MachineComponent implements OnInit, OnDestroy {
   }
 
   saveMachine(machine?: Machine): void {
-    let name: string;
-    let type: string;
-    let manufacturer: string;
-    if (machine) {
-      name = machine.name;
-      type = machine.type;
-      manufacturer = machine.manufacturer
-      console.log(name, type, manufacturer);
-    }
-
+    console.log(machine);
+    console.log(this.machineForm.value);    
+    machine = this.machineForm.value;
     this.subscriptions.push(this.machineService.addMachine(machine).subscribe(
       response => {
         console.log(response);
@@ -90,34 +115,75 @@ export class MachineComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     ));
-    /*       
-        let failures: FormArray = new FormArray([]);
-    
+  }
+   
+
+
+
+    /* 
+
+    saveMachine(machine?: Machine): void {
+    let name: string;
+    let type: string;
+    let manufacturer: string;
+    let failures: FormArray = new FormArray([]);
+
+    if (machine) {
+      name = machine.name;
+      type = machine.type;
+      manufacturer = machine.manufacturer
+      console.log(name, type, manufacturer);
+
+      if(failures){
+        
+      }
+
+
+    }
+
+
+    this.machineForm = new FormGroup({
+      failureList: failureList
+    })
+    this.addFailure();
+        
         this.machineForm = new FormGroup({
-          name: new FormControl(name),
+          name: new FormControl('', Validators.required),
           type: new FormControl(type),
           manufacturer: new FormControl(manufacturer),
           failures: failures
         })
-        if (!machine) {
+        if (machine) {
           this.addFailure();
-        } 
+        }
      */
-  }
+    /* 
+        this.subscriptions.push(this.machineService.addMachine(machine).subscribe(
+          response => {
+            console.log(response);
+            console.log("Machine saved to database!");
+          }, error => {
+            console.log(error);
+          }
+        )); */
+
+  
 
   get failureForms() {
-    return this.machineForm.get('failures') as FormArray
+    return this.machineForm.get('failureList') as FormArray
   }
 
-  addFailure(failure?: Failure): void {
-    console.log("in addFailure")
+ /*  addFailure(failure?: Failure): void {
+    console.log("in addFailure");
+    console.log(failure);
     let title: string;
     let description: string;
     if (failure) {
       title = failure.title;
       description = failure.description;
+      console.log(title, description);
     }
-    (<FormArray>this.machineForm.controls['failures']).push(
+    (<FormArray>this.machineForm.controls['failureList']).push(
       new FormGroup({
         title: new FormControl(title),
         description: new FormControl(description)
@@ -130,7 +196,7 @@ export class MachineComponent implements OnInit, OnDestroy {
     this.failureForms.removeAt(i);
   }
 
-
+ */
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }

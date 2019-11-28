@@ -16,6 +16,8 @@ export class MachineService {
   constructor(private http: HttpClient) { }
 
   addMachine(machine: Machine): Observable<Machine | HttpErrorResponse>{
+    console.log("from sevice");
+    console.log(machine);
     return this.http.post<Machine>(`${this.host}/machine/save`, machine);
   }
 
