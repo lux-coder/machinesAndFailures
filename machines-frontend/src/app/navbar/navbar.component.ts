@@ -14,54 +14,19 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
   styleUrls: ['./navbar.component.scss']
 })
 
-export class NavbarComponent implements OnInit, OnDestroy {
+export class NavbarComponent implements OnInit {
   private subscriptions: Subscription[] = [];
-
-  machine: Machine;
+  
   host: string;
   showNavbar: boolean;
   clientHost: string;
-  machineForm: FormGroup;
 
   constructor(
     private router: Router,
-    private machineService: MachineService,
-    private failureService: FailureService,
-    private formBuilder: FormBuilder
   ) { }
 
-  ngOnInit() {
-    this.host = this.failureService.host;    
+  ngOnInit() {    
     this.showNavbar = true;
-    this.machineForm = this.formBuilder.group({
-      name: '',
-      type: '',
-      manufacturer: '',
-      failures: this.formBuilder.array([])
-    })
-
-  }
-
-  get failureForms(){
-    return this.machineForm.get('failures') as FormArray
-  }
-
-  addFailure(){
-    const failure = this.formBuilder.group({
-      title: [],
-      description: [],
-      status: [],
-      time: []
-    })
-    this.failureForms.push(failure);
-  }
-
-  deleteFailure(i){
-    this.failureForms.removeAt(i);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(sub => sub.unsubscribe);
   }
 
 }

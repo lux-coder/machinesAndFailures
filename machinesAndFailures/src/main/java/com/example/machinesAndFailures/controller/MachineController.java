@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -46,31 +48,41 @@ public class MachineController {
 
     @PostMapping("/save")
     public ResponseEntity<?> saveMachine(@RequestBody RequestWrapper requestWrapper) {
+    //public ResponseEntity<?> saveMachine(@RequestBody Machine requestWrapper) {
         LOG.info("In Machine /save");
 
         LOG.info(String.valueOf(requestWrapper));
 
         Machine machine = requestWrapper.getMachine();
         LOG.info(String.valueOf(machine));
+
         List<Failure> failures = requestWrapper.getFailures();
         LOG.info(String.valueOf(failures));
+
+//        MultipartFile multipartFile = requestWrapper.getFiles();
+//        LOG.info(String.valueOf(multipartFile));
 
         for(Failure failure: failures){
             LOG.info("Title: {} and Description: {}",failure.getTitle(), failure.getDescription());
         }
 
+//        for(MultipartFile multipartFile: multipartFiles){
+//            LOG.info("File name: {} and file size {}", multipartFile.getName(), multipartFile.getSize());
+//        }
+
 
         String name = machine.getName();
         String type = machine.getType();
         String manufacturer = machine.getManufacturer();
-        //failures = machine.getFailures();
+//        failures = machine.getFailures();
 
-        LOG.info("Name: {}", name);
-        LOG.info("Type: {}", type);
-        LOG.info("Manufacturer: {}", manufacturer);
-        LOG.info("Failures: {}", failures);
-        LOG.info("Machine object: {}", machine);
-
+//
+//        LOG.info("Name: {}", name);
+//        LOG.info("Type: {}", type);
+//        LOG.info("Manufacturer: {}", manufacturer);
+//        LOG.info("Failures: {}", failures);
+//        LOG.info("Machine object: {}", machine);
+//
         try {
             machineService.saveMachine(name, type, manufacturer, failures);
             return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
@@ -99,29 +111,6 @@ public class MachineController {
             return new ResponseEntity<>("Exception occurred while trying to delete machine", HttpStatus.BAD_REQUEST);
         }
     }
-
-//
-//    @GetMapping("/getMachineFailures/{name}")
-//    public ResponseEntity<?> getMachineFailures(@PathVariable("name") String name){
-//        Machine machine = machineService.getMachineByName(name);
-//
-//        if(machine == null){
-//            return new ResponseEntity<>("Machine not found", HttpStatus.NOT_FOUND);
-//        }
-//
-//        try {
-//            List<Failure> failures = failureService.getFailureByMachineName(name);
-//            return new ResponseEntity<>(failures, HttpStatus.OK);
-//
-//        } catch (Exception e){
-//            LOG.error("Exception {} occurred while trying to fetch machine failures with stacktrace {} ", e.getMessage(), e.getStackTrace());
-//            return new ResponseEntity<>("Exception occurred while trying to fetch machine failures", HttpStatus.BAD_REQUEST);
-//
-//        }
-//}
-
-
-
 
 
 }

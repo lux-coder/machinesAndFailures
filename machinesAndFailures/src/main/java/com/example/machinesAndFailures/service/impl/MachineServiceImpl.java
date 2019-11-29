@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class MachineServiceImpl implements MachineService {
@@ -20,11 +21,19 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public Machine saveMachine(String name, String type, String manufacturer, List<Failure> failures) {
+        LOG.info("In saveMachine");
         Machine machine = new Machine();
         machine.setName(name);
         machine.setType(type);
         machine.setManufacturer(manufacturer);
+
         machine.setFailures(failures);
+
+        for(Failure failure: failures){
+            failure.setMachine(machine);
+            failure.setTimestamp(new Timestamp(System.currentTimeMillis()));
+            LOG.info(String.valueOf(failure.getMachine()));
+        }
 
         machineRepository.save(machine);
         return machine;

@@ -58,63 +58,62 @@
 
         <div class="modal-content">
 
-            <form class="ui form" [formGroup]="machineForm" >
-                <div class="form-header" formGroupName="machine">
-                    <label>Machine Name <input formControlName="name" /></label>
-                    <label>Machine Type <input formControlName="type" /></label>
-                    <label>Machine Manufacturer <input formControlName="manufacturer" /></label>
-                    <button type="button" (click)="addFailure()">Add Failure</button>
-                </div>
-
-                <hr />
-                
-                <div formArrayName="failures">
-                    <div class="failures" *ngFor="
-                                  let failure of machineForm.get('failures').controls;
-                                  let failureIndex = index
-                                " [formGroupName]="failureIndex">
-                        <label>Failure Title <input formControlName="title" />
-                            <label>Failure Description <input formControlName="description" /></label>
-                            
-
+            <form [formGroup]="machineForm">
+                <mat-card>
+                    <mat-card-header  formGroupName="machine">
+                        <mat-card-title>
                             <mat-form-field>
-                                    <mat-label>Failure Priority</mat-label>
+                                <input matInput required placeholder="Machine Name" formControlName="name">
+                            </mat-form-field>
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                            <mat-form-field>
+                                <input matInput placeholder="Machine Type" formControlName="type">
+                            </mat-form-field>
+                        </mat-card-subtitle>
+                        <mat-card-subtitle>
+                            <mat-form-field>
+                                <input matInput placeholder="Machine Manufacturer" formControlName="manufacturer">
+                            </mat-form-field>
+                        </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content formArrayName="failures">                        
+                        <div >
+                                
+                            <div *ngFor="let failure of machineForm.get('failures').controls;
+                                        let failureIndex = index" [formGroupName]="failureIndex">
+                                <input matInput placeholder="Failure Title" formControlName="title">
+                                <textarea matInput placeholder="Failure Description"
+                                    formControlName="description"> </textarea>
+                                <mat-form-field>
+                                    <mat-label> Priority </mat-label>
                                     <select matNativeControl required formControlName="priority">
-                                      <option value="HIGH">HIGH</option>
-                                      <option value="MEDIUM">MEDIUM</option>
-                                      <option value="LOW">LOW</option>
+                                        <option value="HIGH"> HIGH </option>
+                                        <option value="MEDIUM"> MEDIUM </option>
+                                        <option value="LOW"> LOW </option>
                                     </select>
-                                  </mat-form-field>
-
-                                  <mat-form-field>
-                                        <mat-label>Failure Status</mat-label>
-                                        <select matNativeControl required formControlName="status">
-                                          <option value="true">Resolved</option>
-                                          <option value="false">Unresolved</option>
-                                        </select>
-                                      </mat-form-field>
-
-
-
-                            <button (click)="deleteFailure(failureIndex)">x</button></label>
-                        <hr />
-                        <button type="button" (click)="addFile(failure)">Add File</button>
-                        <div formArrayName="files">
-                            <div class="players" *ngFor="
-                                      let file of failure.get('files').controls;
-                                      let fileIndex = index
-                                    " [formGroupName]="fileIndex">
-                                <label>File Name <input formControlName="file_name" />
-                                    <button (click)="deleteFile(failure, fileIndex)">x</button></label>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label> Status </mat-label>
+                                    <select matNativeControl required formControlName="status">
+                                        <option value="true"> Resolved </option>
+                                        <option value="false"> Unresolved </option>
+                                    </select>
+                                </mat-form-field>
+                                <button mat-button (click)="addFailure()"> Add Failure </button>
+                                <button mat-button (click)="deleteFailure(failureIndex)"> Delete Failure </button>
                             </div>
+
+
                         </div>
-                    </div>
-                </div>
-
-                <button (click)="saveMachine()">Save</button>
-                <button (click)="saveThis(machineForm)">saveThis</button>
-            </form>
-
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button (click)="saveMachine()"> Save Machine </button>
+                <button mat-button (click)="discard()"> Cancle </button>
+            </mat-card-actions>
+            </mat-card>
+        </form>
         </div>
     </div>
 </div>

@@ -40,8 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.dataSource = new MatTableDataSource(this.failures);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        //console.log("Console log");
-        //console.log(this.dataSource.sort);
       },
       error => {
         console.log(error);

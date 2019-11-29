@@ -9,7 +9,8 @@ import { MachineDetailsComponent } from './machine-details/machine-details.compo
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'; 
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FileSelectDirective } from "ng2-file-upload";
 
 import { 
   MatToolbarModule, 
@@ -27,6 +28,7 @@ import {
   MatSortModule,
   MatPaginatorModule
 } from '@angular/material';
+import { FailureComponent } from './failure/failure.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {
     MachineComponent,
     HomeComponent,
     MachineDetailsComponent,
-    NavbarComponent
+    NavbarComponent,
+    FileSelectDirective,
+    FailureComponent
   ],
   imports: [
     HttpClientModule,
