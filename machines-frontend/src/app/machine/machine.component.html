@@ -58,9 +58,9 @@
 
         <div class="modal-content">
 
-            <form [formGroup]="machineForm">
+            <form [formGroup]="machineForm" [hidden]="success" (ngSubmit)="saveMachine()">
                 <mat-card>
-                    <mat-card-header  formGroupName="machine">
+                    <mat-card-header formGroupName="machine">
                         <mat-card-title>
                             <mat-form-field>
                                 <input matInput required placeholder="Machine Name" formControlName="name">
@@ -77,15 +77,30 @@
                             </mat-form-field>
                         </mat-card-subtitle>
                     </mat-card-header>
-
-                    <mat-card-content formArrayName="failures">                        
-                        <div >
-                                
+                    <button mat-raised-button color="primary" (click)="addFailure()"> Add Failure </button>
+                    <mat-card-content formArrayName="failures">
+                        <div>
                             <div *ngFor="let failure of machineForm.get('failures').controls;
                                         let failureIndex = index" [formGroupName]="failureIndex">
-                                <input matInput placeholder="Failure Title" formControlName="title">
-                                <textarea matInput placeholder="Failure Description"
-                                    formControlName="description"> </textarea>
+                                <mat-form-field appearance="outline" >
+                                    <input matInput #input placeholder="Failure Title" formControlName="title">
+                                    <mat-hint align="end">Description will be available after 20 chars 
+                                            {{input.value?.length || 0}}/20</mat-hint>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" >
+                                <textarea matInput placeholder="Failure Description" formControlName="description"
+                                    
+                                      > </textarea>
+
+                                </mat-form-field>
+
+                                <!-- [readonly]="true" 
+                                    *ngIf="input.value?.length > 20 " 
+                                  [readonly]="false"
+                                
+                                -->
+
                                 <mat-form-field>
                                     <mat-label> Priority </mat-label>
                                     <select matNativeControl required formControlName="priority">
@@ -101,19 +116,19 @@
                                         <option value="false"> Unresolved </option>
                                     </select>
                                 </mat-form-field>
-                                <button mat-button (click)="addFailure()"> Add Failure </button>
-                                <button mat-button (click)="deleteFailure(failureIndex)"> Delete Failure </button>
+                                <button mat-raised-button color="warn" (click)="deleteFailure(failureIndex)"> Delete
+                                    Failure </button>
                             </div>
 
 
                         </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="saveMachine()"> Save Machine </button>
-                <button mat-button (click)="discard()"> Cancle </button>
-            </mat-card-actions>
-            </mat-card>
-        </form>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button type="submit" [disabled]="machineForm.invalid" > Save Machine </button>
+                        <button mat-button (click)="discard()"> Cancle </button>
+                    </mat-card-actions>
+                </mat-card>
+            </form>
         </div>
     </div>
 </div>

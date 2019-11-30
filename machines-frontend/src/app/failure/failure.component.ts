@@ -1,15 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Machine } from '../model/machine';
-import { MachineService } from '../service/machine.service';
-import { MatSort, MatPaginator } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { FailureService } from '../service/failure.service';
 import { Failure } from '../model/failure';
-import { FileUploader } from 'ng2-file-upload';
-
 
 @Component({
   selector: 'app-failure',
@@ -36,6 +30,7 @@ export class FailureComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
+    this.getFailures();
   }
 
   getFailures(): any {
@@ -43,7 +38,8 @@ export class FailureComponent implements OnInit, OnDestroy {
       (response: Failure[]) => {
         this.failures = response;
         this.dataSource = new MatTableDataSource(this.failures);
-        console.log(this.failure);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       error => {
         console.log(error);
