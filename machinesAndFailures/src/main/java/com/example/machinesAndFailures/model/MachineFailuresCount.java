@@ -3,13 +3,10 @@ package com.example.machinesAndFailures.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
-public class RequestWrapper {
+public class MachineFailuresCount {
 
     private Machine machine;
-    private List<Failure> failures;
-    private List<FailureFile> failureFiles;
+    private Integer failureCount;
 }

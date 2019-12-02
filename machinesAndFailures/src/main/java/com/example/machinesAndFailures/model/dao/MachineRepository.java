@@ -23,4 +23,7 @@ public interface MachineRepository extends JpaRepository<Machine, Long> {
 
     @Query("SELECT m FROM Machine m WHERE m.name=:x")
     public Machine findMachineByName(@Param("x") String name);
+
+    @Query(value = "SELECT COUNT(*) FROM failure WHERE status=false GROUP BY machine_name", nativeQuery = true)
+    public List<Integer> listMachineF();
 }

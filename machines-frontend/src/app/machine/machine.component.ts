@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Machine } from '../model/machine';
 import { MachineService } from '../service/machine.service';
-import { MatSort, MatPaginator } from '@angular/material';
+import { MatSort, MatPaginator, MatInputModule } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { FailureService } from '../service/failure.service';
 import { Failure } from '../model/failure';
 import { FileUploader } from 'ng2-file-upload';
+import { MachineWrapper } from '../model/machineWrapper';
 
 @Component({
   selector: 'app-machine',
@@ -25,8 +26,10 @@ export class MachineComponent implements OnInit, OnDestroy {
   machineForm: FormGroup;
   host: string;
 
-  displayedColumns: string[] = ['position', 'name', 'type', 'manufacturer', 'resolved'];
-  dataSource = new MatTableDataSource<Machine>([]);
+  displayedColumns: string[] = ['machine.position', 'machine.name', 'machine.type', 'machine.manufacturer', 'failureCount'];
+  /* dataSource = new MatTableDataSource<Machine>([]); */
+
+  dataSource = new MatTableDataSource<MachineWrapper>([]);
 
   uploader: FileUploader = new FileUploader({});
 
@@ -48,13 +51,15 @@ export class MachineComponent implements OnInit, OnDestroy {
         type: '',
         manufacturer: ''
       }),
-      failures: this.formBuilder.array([this.failures])
+      failures: this.formBuilder.array([])
+      /* failures: this.formBuilder.array([this.failures]) */
     });
   }
 
   ngOnInit() {
     this.createForm();
     this.getMachines();   
+    this.machineForm.valueChanges.subscribe(console.log);    
   }
 
   onSubmit() {
@@ -67,11 +72,28 @@ export class MachineComponent implements OnInit, OnDestroy {
       description: "",
       priority: "",
       status: "",      
-      files: this.formBuilder.array([this.files])
+      files: this.formBuilder.array([])
     });
   }
 
-
+  get title(){
+    console.log("for title");
+    this.failures.valueChanges.subscribe(
+      )
+    
+    return true;
+  }
+  
+  validateForDescription(formControl: AbstractControl) {
+    if(!formControl.parent){
+      return null;
+    }
+    if(formControl.parent.get('title').value.length > 5){
+      console.log("CHECKED");
+    }
+    return null;
+  }
+    
   get files(): FormGroup {
     return this.formBuilder.group({
       files: [this.upload()]
@@ -97,10 +119,25 @@ export class MachineComponent implements OnInit, OnDestroy {
 
   getMachines(): any {
     this.subscriptions.push(this.machineService.getMachines().subscribe(
-      (response: Machine[]) => {
-        this.machines = response;
+       (response: MachineWrapper[]) => { 
+/*         response => {
+
+          response. */
+          
+
+        this.dataSource = new MatTableDataSource(response);
+
+
+
+     /*   this.machines = response;
         this.dataSource = new MatTableDataSource(this.machines);
-        console.log(this.machines);
+
+         this.machines.forEach(machine => {
+          console.log(machine.name);
+          this.checkForFailures(machine.name);
+          
+        }); */
+        console.log(response);
       },
       error => {
         console.log(error);
@@ -118,6 +155,7 @@ export class MachineComponent implements OnInit, OnDestroy {
       response => {
         console.log(response);
         console.log("Machine saved to database!");
+        this.router.navigateByUrl("/machine");
       }, error => {
         console.log(error);
       }
@@ -143,9 +181,25 @@ export class MachineComponent implements OnInit, OnDestroy {
     this.uploader.clearQueue();
   }
 
+   checkForFailures(machineName: string){
+    console.log("Checking if has unresolved failures for machine name:");
+    console.log(machineName);
+    this.subscriptions.push(this.failureService.checkForUnresolved(machineName).subscribe(
+      response =>{
+        console.log(response);
+      }, error => {
+        console.log(error);        
+      }      
+    ))
+  } 
+
+  discard(){
+    console.log("redirect to machiine view");
+    this.router.navigateByUrl("/machine");
+    window.location.reload();
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
-
-
 }

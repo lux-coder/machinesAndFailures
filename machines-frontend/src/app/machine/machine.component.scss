@@ -90,3 +90,25 @@ textarea {
     .result {
         padding: 50px !important;
     }
+
+    #description{
+        border: solid 2px black;
+    }
+
+    .success{
+        background-color: green;
+        color: #fff;
+    }
+
+    .content{
+        display: flex;
+    }
+
+    .contentChild{
+        size: 100%;
+    }
+
+    .break {
+        flex-basis: 100%;
+        height: 0;
+      }

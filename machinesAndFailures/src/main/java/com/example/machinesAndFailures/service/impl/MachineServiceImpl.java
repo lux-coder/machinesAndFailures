@@ -1,7 +1,9 @@
 package com.example.machinesAndFailures.service.impl;
 
 import com.example.machinesAndFailures.model.Failure;
+import com.example.machinesAndFailures.model.FailureFile;
 import com.example.machinesAndFailures.model.Machine;
+import com.example.machinesAndFailures.model.dao.FailureRepository;
 import com.example.machinesAndFailures.model.dao.MachineRepository;
 import com.example.machinesAndFailures.service.MachineService;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public class MachineServiceImpl implements MachineService {
 
@@ -18,9 +21,11 @@ public class MachineServiceImpl implements MachineService {
     @Autowired
     private MachineRepository machineRepository;
 
+    @Autowired
+    private FailureRepository failureRepository;
 
     @Override
-    public Machine saveMachine(String name, String type, String manufacturer, List<Failure> failures) {
+    public Machine saveMachine(String name, String type, String manufacturer, List<Failure> failures, List<FailureFile> failureFiles) {
         LOG.info("In saveMachine");
         Machine machine = new Machine();
         machine.setName(name);
@@ -33,8 +38,17 @@ public class MachineServiceImpl implements MachineService {
             failure.setMachine(machine);
             failure.setTimestamp(new Timestamp(System.currentTimeMillis()));
             LOG.info(String.valueOf(failure.getMachine()));
-        }
 
+            if(failureFiles != null){
+            failure.setFailureFiles(failureFiles);
+
+            for(FailureFile failureFile: failureFiles){
+                failureFile.setFailure(failure);
+                LOG.info(String.valueOf(failureFile.getFailure()));
+            }
+            failureRepository.save(failure);
+            }
+        }
         machineRepository.save(machine);
         return machine;
     }
@@ -45,9 +59,16 @@ public class MachineServiceImpl implements MachineService {
     }
 
 //    @Override
-//    public Machine listAllFailures(Long id) {
-//        return machineRepository.findAllFailures(id);
+//    public Map<Machine, Integer> listMachineF() {
+//
+//        return machineRepository.listMachineF();
+//
 //    }
+
+    @Override
+    public List<Integer> failuresCount() {
+        return machineRepository.listMachineF();
+    }
 
     @Override
     public Machine getMachineById(Long id) {

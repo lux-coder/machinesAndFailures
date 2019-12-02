@@ -11,6 +11,7 @@ export class FailureService {
   
   constant: ServerConstant = new ServerConstant();
   public host: string = this.constant.host;
+  public counter: string;
 
   constructor(private http: HttpClient) { }
 
@@ -28,7 +29,9 @@ export class FailureService {
     
   }
 
-
-
+  checkForUnresolved(machineName): Observable<any> {    
+    console.log(machineName);
+    return this.http.get<any>(`${this.host}/failure/unresolved`, machineName);
+  }
 
 }

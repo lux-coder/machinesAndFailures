@@ -1,8 +1,6 @@
 package com.example.machinesAndFailures.controller;
 
-import com.example.machinesAndFailures.model.Failure;
-import com.example.machinesAndFailures.model.Machine;
-import com.example.machinesAndFailures.model.RequestWrapper;
+import com.example.machinesAndFailures.model.*;
 import com.example.machinesAndFailures.service.FailureService;
 import com.example.machinesAndFailures.service.MachineService;
 import org.slf4j.Logger;
@@ -13,8 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static javafx.scene.input.KeyCode.K;
+import static javafx.scene.input.KeyCode.V;
 
 @RestController
 @RequestMapping("/machine")
@@ -28,12 +30,78 @@ public class MachineController {
     @Autowired
     private FailureService failureService;
 
-
     @GetMapping("/list")
     public List<Machine> getMachineList(){
         LOG.info("In /machine/list");
         return machineService.listMachine();
     }
+
+    @GetMapping("/listf")
+    public List<MachineFailuresCount> getMachineListf(){
+        LOG.info("In /machine/listf");
+
+        List<MachineFailuresCount> machineFailuresCounts = new ArrayList<>();
+
+        List<Machine> machines = machineService.listMachine();
+        List<Integer> failuresCount = machineService.failuresCount();
+        LOG.info(String.valueOf(machines));
+        LOG.info(String.valueOf(failuresCount));
+
+        for(int i = 0; i< machines.size(); ++i ){
+            MachineFailuresCount machineFailuresCount = new MachineFailuresCount();
+            LOG.info(String.valueOf(i));
+            machineFailuresCount.setMachine(machines.get(i));
+            machineFailuresCount.setFailureCount(failuresCount.get(i));
+
+            LOG.info(String.valueOf(machineFailuresCount));
+
+            machineFailuresCounts.add(machineFailuresCount);
+
+        }
+
+        LOG.info(String.valueOf(machineFailuresCounts));
+
+        return machineFailuresCounts;
+    }
+
+
+//    @GetMapping("/listf")
+//    public Map<Machine, Integer> getMachineListf(){
+//        LOG.info("In /machine/listf");
+//
+//        List<Machine> machines = machineService.listMachine();
+//        List<Integer> failuresCount = machineService.failuresCount();
+//        LOG.info(String.valueOf(machines));
+//        LOG.info(String.valueOf(failuresCount));
+//
+//        HashMap<Machine, Integer> machineIntegerHashMap = new HashMap<>();
+//
+////        for(Machine machine: machines){
+////            LOG.info(machine.getName());
+////
+////            machineIntegerHashMap.put(machine, failuresCount.iterator())
+////        }
+//
+//        for(int i = 0; i < machines.size(); i++){
+//            machineIntegerHashMap.put(machines.get(i), failuresCount.get(i));
+//        }
+//
+//        LOG.info(String.valueOf(machineIntegerHashMap));
+//
+////        machineIntegerHashMap.
+//
+//
+//        return machineIntegerHashMap;
+//        //return zipToMap(machines, failuresCount);
+//        }
+
+
+        public static <Machine, Integer> Map<Machine, Integer> zipToMap(List<Machine> keys, List<Integer> values) {
+            Iterator<Machine> keyIter = keys.iterator();
+            Iterator<Integer> valIter = values.iterator();
+            return IntStream.range(0, keys.size()).boxed()
+                    .collect(Collectors.toMap(_i -> keyIter.next(), _i -> valIter.next()));
+        }
 
 //    @GetMapping("/listFailures/{id}")
 //    public Machine getAllFailures(@PathVariable("id") Long id){
@@ -57,14 +125,26 @@ public class MachineController {
         LOG.info(String.valueOf(machine));
 
         List<Failure> failures = requestWrapper.getFailures();
-        LOG.info(String.valueOf(failures));
+        if(failures != null) {
+            LOG.info(String.valueOf(failures));
+            for(Failure failure: failures){
+                LOG.info("Title: {} and Description: {}",failure.getTitle(), failure.getDescription());
+            }
+
+        }
+
+        List<FailureFile> failureFiles = requestWrapper.getFailureFiles();
+//        if (failureFiles != null) {
+//            LOG.info(String.valueOf(failureFiles));
+//            for(FailureFile failureFile: failureFiles){
+//                LOG.info("File name: {} and binary content: {}", failureFile.getFileName(), failureFile.getContent());
+//            }
+//        }
+
 
 //        MultipartFile multipartFile = requestWrapper.getFiles();
 //        LOG.info(String.valueOf(multipartFile));
 
-        for(Failure failure: failures){
-            LOG.info("Title: {} and Description: {}",failure.getTitle(), failure.getDescription());
-        }
 
 //        for(MultipartFile multipartFile: multipartFiles){
 //            LOG.info("File name: {} and file size {}", multipartFile.getName(), multipartFile.getSize());
@@ -84,7 +164,7 @@ public class MachineController {
 //        LOG.info("Machine object: {}", machine);
 //
         try {
-            machineService.saveMachine(name, type, manufacturer, failures);
+            machineService.saveMachine(name, type, manufacturer, failures, failureFiles);
             return new ResponseEntity<>("Machine saved", HttpStatus.CREATED);
 
         } catch (Exception e){

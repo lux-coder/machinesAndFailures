@@ -67,6 +67,26 @@ public class FailureServiceImpl implements FailureService {
     }
 
     @Override
+    public Integer hasUnresolvedFailures(String machineName){
+        LOG.info("In hasUnresolvedFailures");
+
+        List<Failure> failures = failureRepository.findFailureByMachineName(machineName);
+        LOG.info(String.valueOf(failures));
+        Integer counter = 0;
+
+        if(failures != null){
+
+                for(Failure failure: failures){
+            if (!failure.getStatus()){
+                counter++;
+            }
+        }
+        }
+        LOG.info(String.valueOf(counter));
+        return counter;
+    }
+
+    @Override
     public void updateFailureStatus(Long id) {
         LOG.info("In updateFailureStatus");
         LOG.info(String.valueOf(id));

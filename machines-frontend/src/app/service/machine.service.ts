@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/htt
 import { Observable } from 'rxjs';
 import { Machine } from '../model/machine';
 import { Failure } from '../model/failure';
+import { MachineWrapper } from '../model/machineWrapper';
 import { ServerConstant } from '../constant/server-constant';
 
 @Injectable({
@@ -25,8 +26,12 @@ export class MachineService {
     return this.http.post<Machine>(`${this.host}/machine/save`, machine);
   }
 
-  getMachines(): Observable<Machine[]>{
+/*    getMachines(): Observable<Machine[]>{
     return this.http.get<Machine[]>(`${this.host}/machine/list`);
+  }  */
+
+   getMachines(): Observable<MachineWrapper[]>{
+    return this.http.get<MachineWrapper[]>(`${this.host}/machine/listf`);
   }
 
   getMachineInformation(name: string): Observable<Machine>{

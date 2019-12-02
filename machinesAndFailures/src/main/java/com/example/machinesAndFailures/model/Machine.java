@@ -61,14 +61,14 @@ public class Machine implements Serializable {
         failure.setMachineName(null);
     }
 
-    @Override
-    public String toString() {
-        return "Machine{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", failures=" + Arrays.toString(failures.toArray()) +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Machine{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", type='" + type + '\'' +
+//                ", manufacturer='" + manufacturer + '\'' +
+//                ", failures=" + Arrays.toString(failures.toArray()) +
+//                '}';
+//    }
 }

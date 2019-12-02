@@ -56,6 +56,15 @@ public class FailureController {
         return failureService.listFailureUnresolved();
     }
 
+//    @GetMapping("/unresolved")
+//    public Integer hasUnresolvedFailures(@RequestBody HashMap<String, String> request){
+//        LOG.info("In hasUnresolvedFailures");
+//        String machineName = request.get("machineName");
+//        //return failureService.hasUnresolvedFailures(machineName);
+//        return 5;
+//    }
+
+
     @CrossOrigin(origins = "*", methods = RequestMethod.PUT, allowedHeaders = "*")
     @PutMapping("/updateStatus")
     public ResponseEntity<?> updateFailureStatus(@RequestBody Long id){
@@ -98,6 +107,4 @@ public class FailureController {
             return new ResponseEntity<>("Error occurred while trying to save failure", HttpStatus.BAD_REQUEST);
         }
     }
-
-
 }

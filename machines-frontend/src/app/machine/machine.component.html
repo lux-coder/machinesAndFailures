@@ -1,33 +1,33 @@
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <!-- Position Column -->
-    <ng-container matColumnDef="position">
+    <ng-container matColumnDef="machine.position">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-        <td mat-cell *matCellDef="let machines"> {{machines.id}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.machine.id}} </td>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="machine.name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let machines"> {{machines.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.machine.name}} </td>
     </ng-container>
 
     <!-- Type Column -->
-    <ng-container matColumnDef="type">
+    <ng-container matColumnDef="machine.type">
         <th mat-header-cell *matHeaderCellDef> Type </th>
-        <td mat-cell *matCellDef="let machines"> {{machines.type}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.machine.type}} </td>
     </ng-container>
 
     <!-- Manufacturer Column -->
-    <ng-container matColumnDef="manufacturer">
+    <ng-container matColumnDef="machine.manufacturer">
         <th mat-header-cell *matHeaderCellDef> Manufacturer </th>
-        <td mat-cell *matCellDef="let machines"> {{machines.manufacturer}} </td>
+        <td mat-cell *matCellDef="let element"> {{ element.machine.manufacturer}} </td>
     </ng-container>
 
     <!-- Resolved Column -->
-    <ng-container matColumnDef="resolved">
+    <ng-container matColumnDef="failureCount">
         <th mat-header-cell *matHeaderCellDef> Unresolved Failures </th>
-        <td mat-cell *matCellDef="let element"> NO </td>
+        <td mat-cell *matCellDef="let element"> {{element.failureCount}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -58,9 +58,9 @@
 
         <div class="modal-content">
 
-            <form [formGroup]="machineForm">
+            <form id="cardWraper" [formGroup]="machineForm" [hidden]="success" (ngSubmit)="saveMachine()">
                 <mat-card>
-                    <mat-card-header  formGroupName="machine">
+                    <mat-card-header formGroupName="machine">
                         <mat-card-title>
                             <mat-form-field>
                                 <input matInput required placeholder="Machine Name" formControlName="name">
@@ -77,15 +77,33 @@
                             </mat-form-field>
                         </mat-card-subtitle>
                     </mat-card-header>
-
-                    <mat-card-content formArrayName="failures">                        
-                        <div >
-                                
+                    <button type="button" mat-raised-button color="primary" (click)="addFailure()"> Add Failure </button>
+                    <mat-card-content formArrayName="failures" class="content">
+                        <div>
                             <div *ngFor="let failure of machineForm.get('failures').controls;
                                         let failureIndex = index" [formGroupName]="failureIndex">
-                                <input matInput placeholder="Failure Title" formControlName="title">
-                                <textarea matInput placeholder="Failure Description"
-                                    formControlName="description"> </textarea>
+                                <mat-form-field appearance="outline" class="contentChild" >
+                                    <input matInput #input placeholder="Failure Title" formControlName="title">
+                                    <mat-hint align="end">Description will be available after 20 chars 
+                                            {{input.value?.length || 0}}/20</mat-hint>
+                                </mat-form-field>
+                                <div class="break"></div>
+
+                                <mat-form-field appearance="outline" class="contentChild" >
+                                <textarea matInput placeholder="Failure Description" formControlName="description"
+                                    
+                                      > </textarea>
+
+                                </mat-form-field>
+
+                                <div class="break"></div>
+
+                                <!-- [readonly]="true" 
+                                    *ngIf="input.value?.length > 20 " 
+                                  [readonly]="false"
+                                
+                                -->
+
                                 <mat-form-field>
                                     <mat-label> Priority </mat-label>
                                     <select matNativeControl required formControlName="priority">
@@ -101,19 +119,21 @@
                                         <option value="false"> Unresolved </option>
                                     </select>
                                 </mat-form-field>
-                                <button mat-button (click)="addFailure()"> Add Failure </button>
-                                <button mat-button (click)="deleteFailure(failureIndex)"> Delete Failure </button>
+                                <div class="break"></div>
+                                 <button type="button" mat-raised-button color="primary" (click)= "addFiles()"> Upload files</button>
+                                 <button mat-raised-button color="accent" (click)="deleteFailure(failureIndex)"> Delete
+                                    Failure </button>
                             </div>
 
 
                         </div>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button (click)="saveMachine()"> Save Machine </button>
-                <button mat-button (click)="discard()"> Cancle </button>
-            </mat-card-actions>
-            </mat-card>
-        </form>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button type="submit" class="success" [disabled]="machineForm.invalid" > Save Machine </button>
+                        <button type="reset" mat-raised-button color="warn" (click)="discard()"> Cancle </button>
+                    </mat-card-actions>
+                </mat-card>
+            </form>
         </div>
     </div>
 </div>

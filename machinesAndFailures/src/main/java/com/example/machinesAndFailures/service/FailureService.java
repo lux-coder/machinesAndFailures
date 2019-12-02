@@ -18,6 +18,8 @@ public interface FailureService {
 
     public List<Failure> listFailureUnresolved();
 
+    public Integer hasUnresolvedFailures(String machineName);
+
     public Failure getFailureById(Long id);
 
     public void updateFailureStatus(Long id);
