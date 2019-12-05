@@ -16,7 +16,7 @@ export class MachineService {
 
   constructor(private http: HttpClient) { }
 
-  addMachine(machine: Machine): Observable<Machine | HttpErrorResponse>{
+  addMachine(machine: Machine): Observable<Machine | HttpErrorResponse> {
     console.log("from sevice");
     console.log(machine);
 
@@ -26,23 +26,25 @@ export class MachineService {
     return this.http.post<Machine>(`${this.host}/machine/save`, machine);
   }
 
-/*    getMachines(): Observable<Machine[]>{
+  getMachines(): Observable<Machine[]> {
     return this.http.get<Machine[]>(`${this.host}/machine/list`);
-  }  */
-
-   getMachines(): Observable<MachineWrapper[]>{
-    return this.http.get<MachineWrapper[]>(`${this.host}/machine/listf`);
   }
 
-  getMachineInformation(name: string): Observable<Machine>{
+  /*
+  
+     getMachines(): Observable<MachineWrapper[]>{
+      return this.http.get<MachineWrapper[]>(`${this.host}/machine/listf`);
+    }
+  */
+  getMachineInformation(name: string): Observable<Machine> {
     return this.http.get<Machine>(`${this.host}/machine/${name}`);
   }
 
-  searchMachine(name: string): Observable<Machine[]>{
+  searchMachine(name: string): Observable<Machine[]> {
     return this.http.get<Machine[]>(`${this.host}/machine/findByName/${name}`);
   }
 
-  updateMachine(updateMachine: Machine): Observable<Machine>{
+  updateMachine(updateMachine: Machine): Observable<Machine> {
     return this.http.post<Machine>(`${this.host}/machine/update`, updateMachine);
   }
 

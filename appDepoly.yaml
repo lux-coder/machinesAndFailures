@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: machines-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: machines-frontend
+  template:
+    metadata:
+      labels:
+        app: machines-frontend
+    spec:
+      containers:
+      - name: machines-frontend
+        image: docker.io/luxcoder2/machine_and_failures:machines-frontend
+        imagePullPolicy: Always
+        ports:
+        -  containerPort: 80

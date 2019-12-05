@@ -40,9 +40,9 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
     </table>
-
+<!-- (click)="onRowClicked(row)" -->
     <!-- Pagination -->
     <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
 </div>

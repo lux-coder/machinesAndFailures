@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: machine-backend
+spec:
+  selector:
+    app: machine-backend
+  type: LoadBalancer
+  ports:
+    - name: web-port
+      port: 8080
+      targetPort: 8080

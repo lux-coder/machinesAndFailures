@@ -10,7 +10,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FileSelectDirective } from "ng2-file-upload";
+//import { FileSelectDirective } from "ng2-file-upload";
 
 import { 
   MatToolbarModule, 
@@ -37,7 +37,7 @@ import { FailureComponent } from './failure/failure.component';
     HomeComponent,
     MachineDetailsComponent,
     NavbarComponent,
-    FileSelectDirective,
+    //FileSelectDirective,
     FailureComponent
   ],
   imports: [

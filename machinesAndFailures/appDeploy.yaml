@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: machine-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: machine-backend
+  template:
+    metadata:
+      labels:
+        app: machine-backend
+    spec:
+      containers:
+      - name: machine-backend
+        image: docker.io/luxcoder2/machine_and_failures:machines-backend
+        imagePullPolicy: Always
+        ports:
+        -  containerPort: 8080
