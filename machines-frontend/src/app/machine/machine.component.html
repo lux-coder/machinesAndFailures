@@ -90,9 +90,10 @@
                             </mat-form-field>
                             <div class="break"></div>
 
-                            <mat-form-field appearance="outline" class="width">
+                            <mat-form-field appearance="outline" class="width" >
                                 <textarea matInput placeholder="Failure Description"
-                                    formControlName="description"> </textarea>
+                                    formControlName="description" 
+                                    > </textarea>
 
                             </mat-form-field>
 
@@ -101,10 +102,12 @@
                             <!-- [readonly]="true" 
                         *ngIf="input.value?.length > 20 " 
                       [readonly]="false"
-                    
+
+                    *ngIf="failures.controls['title'].value?.length > 5 [readonly]=true"
+
                     -->
 
-                            <mat-form-field>
+                            <mat-form-field id="padding">
                                 <mat-label> Priority </mat-label>
                                 <select matNativeControl required formControlName="priority">
                                     <option value="HIGH"> HIGH </option>
@@ -120,7 +123,7 @@
                                 </select>
                             </mat-form-field>
                             <div class="break"></div>
-                            <button type="button" mat-raised-button color="primary"> Upload files</button>
+                            <button type="button" id="marginR" mat-raised-button color="primary"> Upload files</button>
                             <!-- (click)= "addFile()" -->
                             <button mat-raised-button color="accent" (click)="deleteFailure(failureIndex)"> Delete
                                 Failure </button>
@@ -131,13 +134,13 @@
 
 
 
-                    <mat-card-actions>
+                    <mat-card-actions id="actionsAdd">
                         <button mat-button class="success" [disabled]="machineForm.invalid" (click)="saveMachine()">
                             Save Machine
                         </button>
                         <button type="button" mat-raised-button color="primary" (click)="addFailure()"> Add Failure
                         </button>
-                        <button type="reset" mat-raised-button color="warn" (click)="discard()"> Cancle </button>
+                        <button type="reset" id="close" mat-raised-button color="warn" (click)="discard()"> Cancle </button>
                     </mat-card-actions>
                 </mat-card>
             </form>

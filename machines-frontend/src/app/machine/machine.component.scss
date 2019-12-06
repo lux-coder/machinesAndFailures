@@ -21,7 +21,15 @@ textarea {
       
       #close{
         margin-left: auto;
-        background-color: red;
+      //  background-color: red;
+      }
+
+      #padding{
+          padding-right: 20px;
+      }
+
+      #marginR{
+          margin-right: 15px;
       }
 
       .banner {
@@ -127,4 +135,10 @@ textarea {
             width: 100%;
     
           }
+     }
+
+     ::ng-deep{         
+        .mat-card-actions{
+            display: flex;
+        }
      }
