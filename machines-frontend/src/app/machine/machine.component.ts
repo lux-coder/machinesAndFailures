@@ -10,13 +10,9 @@ import { FailureService } from '../service/failure.service';
 import { Failure } from '../model/failure';
 //import { FileUploader } from 'ng2-file-upload';
 import { MachineWrapper } from '../model/machineWrapper';
-//import '../../../../../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-//import '../../../../../../../../../node_modules/bootstrap/dist/js/bootstrap.min.css';
-//import '/home/lux/Documents/machinesAndFailuresApp/machines-frontend/node_modules/bootstrap/dist/css/bootstrap.min.css';
-//import '/home/lux/Documents/machinesAndFailuresApp/machines-frontend/node_modules/bootstrap/dist/js/bootstrap.min.js';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/js/bootstrap.min.js';
 
 
 
@@ -85,15 +81,15 @@ export class MachineComponent implements OnInit, OnDestroy {
     });
   }
 
-  get title() {
+ /*  get title() {
     console.log("for title");
     this.failures.valueChanges.subscribe(
     )
 
     return true;
-  }
+  } */
 
-  validateForDescription(formControl: AbstractControl) {
+ /*  validateForDescription(formControl: AbstractControl) {
     if (!formControl.parent) {
       return null;
     }
@@ -101,7 +97,7 @@ export class MachineComponent implements OnInit, OnDestroy {
       console.log("CHECKED");
     }
     return null;
-  }
+  } */
 
   get files(): FormGroup {
     return this.formBuilder.group({
@@ -137,7 +133,7 @@ export class MachineComponent implements OnInit, OnDestroy {
 
 
                   this.machines = response;
-                  this.dataSource = new MatTableDataSource(this.machines);
+                  this.dataSource = new MatTableDataSource(response);
 
 
         /*   
