@@ -61,19 +61,19 @@
 
             <form id="cardWraper" [formGroup]="machineForm">
                 <mat-card>
-                    <mat-card-header formGroupName="machine">
-                        <mat-card-title>
-                            <mat-form-field>
-                                <input matInput required placeholder="Machine Name" formControlName="name">
+                    <mat-card-header formGroupName="machine" >
+                        <mat-card-title >
+                            <mat-form-field class="width">
+                                <input matInput required placeholder="Machine Name" formControlName="name" class="width">
                             </mat-form-field>
                         </mat-card-title>
                         <mat-card-subtitle>
-                            <mat-form-field>
+                            <mat-form-field class="width">
                                 <input matInput placeholder="Machine Type" formControlName="type">
                             </mat-form-field>
                         </mat-card-subtitle>
                         <mat-card-subtitle>
-                            <mat-form-field>
+                            <mat-form-field class="width">
                                 <input matInput placeholder="Machine Manufacturer" formControlName="manufacturer">
                             </mat-form-field>
                         </mat-card-subtitle>
@@ -83,14 +83,14 @@
 
                         <div *ngFor="let failure of machineForm.get('failures').controls;
                             let failureIndex = index" [formGroupName]="failureIndex">
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" class="width">
                                 <input matInput #input placeholder="Failure Title" formControlName="title">
                                 <mat-hint align="end">Description will be available after 20 chars
                                     {{input.value?.length || 0}}/20</mat-hint>
                             </mat-form-field>
                             <div class="break"></div>
 
-                            <mat-form-field appearance="outline">
+                            <mat-form-field appearance="outline" class="width">
                                 <textarea matInput placeholder="Failure Description"
                                     formControlName="description"> </textarea>
 
