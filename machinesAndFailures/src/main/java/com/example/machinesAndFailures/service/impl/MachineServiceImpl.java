@@ -9,11 +9,13 @@ import com.example.machinesAndFailures.service.MachineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class MachineServiceImpl implements MachineService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MachineServiceImpl.class);

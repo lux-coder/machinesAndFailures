@@ -18,7 +18,10 @@ public class FailureFile {
     private Long id;
 
     private String fileName;
-    private File content;
+    private String fileType;
+
+    @Lob
+    private byte[] content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "failureTitle", referencedColumnName = "title")
@@ -27,9 +30,9 @@ public class FailureFile {
     public FailureFile() {
     }
 
-    public FailureFile(Long id, String fileName, File content) {
-        this.id = id;
+    public FailureFile(String fileName, String fileType, byte[] content) {
         this.fileName = fileName;
+        this.fileType = fileType;
         this.content = content;
     }
 

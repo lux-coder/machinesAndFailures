@@ -1,13 +1,13 @@
 package com.example.machinesAndFailures.service;
 
 import com.example.machinesAndFailures.model.FailureFile;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 public interface FailureFileService {
 
-    public FailureFile saveFile(String fileName, File content);
+    public FailureFile saveFile(MultipartFile file);
 
     public List<FailureFile> listFailureFiles();
 
